@@ -29,21 +29,36 @@ def main():
                 st.write("Error: Unable to fetch image from the provided URL." , e)
     with col2:                 
         if gc:            
-            if uploaded_file is not None:   
-                caption = getGeneratedCaption(uploaded_file, modelName,"FILE")
-
-            elif txt.strip() != '':
-                try:
-                    image = requests.get(txt)
-                    image_content = image.content
-                    caption = getGeneratedCaption(image_content, modelName,"URL")
-                except Exception as e:
-                    st.write("Error: Unable to fetch image from the provided URL." , e)
-        
-        
-        if caption is not None:
             st.subheader("Generated Caption:")
-            st.write(caption)
+            if modelName == "All":                
+                for name in modelList[1:]:
+                    st.caption(name)
+                    if uploaded_file is not None:   
+                        caption = getGeneratedCaption(uploaded_file, name,"FILE")
+
+                    elif txt.strip() != '':
+                        try:
+                            image = requests.get(txt)
+                            image_content = image.content
+                            caption = getGeneratedCaption(image_content, name,"URL")
+                        except Exception as e:
+                            st.write("Error: Unable to fetch image from the provided URL." , e)
+                    if caption is not None:
+                        st.write(caption)
+            else:
+                if uploaded_file is not None:   
+                    caption = getGeneratedCaption(uploaded_file, modelName,"FILE")
+
+                elif txt.strip() != '':
+                    try:
+                        image = requests.get(txt)
+                        image_content = image.content
+                        caption = getGeneratedCaption(image_content, modelName,"URL")
+                    except Exception as e:
+                        st.write("Error: Unable to fetch image from the provided URL." , e)
+        
+                if caption is not None:
+                    st.write(caption)
 
 if __name__ == "__main__":
     main()

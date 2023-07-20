@@ -118,7 +118,6 @@ def getGeneratedCaption(uploaded_file, modelName, datType="FILE"):
     image = image.resize((224,224))    
     image = img_to_array(image)    
     image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))    
-    print(image.shape)
     image = preprocess_input(image)    
     feature = vgg_model.predict(image, verbose=0)
 
